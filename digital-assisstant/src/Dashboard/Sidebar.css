@@ -1,0 +1,40 @@
+.sidebar-container{
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-left: 5px;
+    padding-right: 10px;
+    gap: 50px;
+    min-height: 100vh;
+    background-color: #E7DDFF;
+    width: fit-content;
+}
+.side-heading{
+    font-size: 50px;
+}
+.side-menu{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;  
+}
+.side-menu ul{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+}
+.side-menu li{
+    list-style: none;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.side-menu li:hover{
+    background-color: #cdb9fc;
+    cursor: pointer;
+}
+.upper-side li{
+    padding-bottom: 20px;
+}
+
+.bottom-side{
+    margin-top: auto;
+}

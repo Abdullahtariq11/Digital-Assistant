@@ -1,0 +1,6 @@
+.Dashboard{
+    display: flex;
+    min-height: 100vh;
+    gap: 10px;
+    
+}

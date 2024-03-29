@@ -1,0 +1,33 @@
+.footerContainer{
+    display: flex;
+    padding: 5px;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    
+}
+.footerContainer img {
+    background-color: aliceblue;
+    height: 30px; /* Set your desired height for the logo */ 
+  }
+  .footerContainer.contact {
+    font-size: 14px;
+    margin: 5px;
+    color: #fff;
+    font-weight: bold;
+  }
+  .footerContainer.right .social-icon {
+    max-height: 30px;
+  }
+  .footerContainer .right{
+    display: flex;
+    gap: 10px;
+  }
+  .footerContainer .right a{
+    padding-right: 10px;
+  } 
+  .footerContainer .right .social-icon:hover{
+    cursor: pointer;
+  }

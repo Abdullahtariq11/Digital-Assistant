@@ -1,0 +1,6 @@
+.top-bar{
+    padding: 20px;
+    display: flex;
+    height: fit-content;
+    gap: 10px;
+}

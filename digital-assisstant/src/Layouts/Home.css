@@ -1,0 +1,46 @@
+.home-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh; /* Set height to match viewport height */
+}
+
+.half {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.right-side {
+    justify-content: center;
+    align-items: center;
+}
+
+.left-side {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    flex-grow: 1;
+}
+
+.left-side .navContained {
+    flex-grow: 1;
+}
+
+.left-side .footerContained {
+    flex-grow: 0;
+    margin: 30px;
+    align-self: center;
+}
+
+/* Media Queries for responsiveness */
+@media only screen and (max-width: 768px) {
+    .half {
+        width: 100%; /* Take full width on smaller screens */
+    }
+    
+    .left-side,
+    .right-side {
+        width: 100%; /* Take full width on smaller screens */
+    }
+}

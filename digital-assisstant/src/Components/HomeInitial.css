@@ -1,0 +1,78 @@
+.HomeInital {
+    display: flex;
+    flex-direction: column;
+    padding: 5% 5%; /* Adjust padding for responsiveness */
+    align-items: center;
+}
+
+.HomeInital h4 {
+    padding: 5% 0; /* Adjust padding for responsiveness */
+    font-style: italic;
+}
+
+.card {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(69, 67, 67);
+    min-height: 20vh; /* Reduce minimum height for smaller screens */
+    height: auto; /* Set height to auto to adapt to content */
+    width: 50vh;
+    max-width: 80%; /* Adjust maximum width for responsiveness */
+    border-radius: 40px;
+    box-shadow: inset 5px 5px 10px #888888;
+}
+
+.card img {
+    height: 30%; /* Adjust image height for responsiveness */
+    width: 30%; /* Adjust image width for responsiveness */
+    margin: 5% 0; /* Adjust margin for responsiveness */
+}
+
+.card p {
+    color: rgb(248, 248, 248);
+    font-size: large;
+}
+
+.changeCard {
+    display: flex;
+    margin-top: 1%;
+}
+
+.changeCard p:hover {
+    cursor: pointer;
+}
+
+/* Media Queries for responsiveness */
+@media only screen and (max-width: 768px) {
+    .HomeInital {
+        padding: 5% 0; /* Adjust padding on smaller screens */
+    }
+
+    .card {
+        width: 90%; /* Reduce width of card on smaller screens */
+        max-width: 90%; /* Limit card width on smaller screens */
+    }
+
+    .card img {
+        height: 30%; /* Adjust image height for smaller screens */
+        width: 30%; /* Adjust image width for smaller screens */
+    }
+    .HomeInital h4{
+        padding: 5px;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .HomeInital {
+        padding: 5% 0; /* Adjust padding on smaller heights */
+    }
+
+    .card {
+        min-height: 15vh; /* Reduce minimum height of card on smaller heights */
+    }
+    .HomeInital h4{
+        padding: 5px;
+    }
+}
