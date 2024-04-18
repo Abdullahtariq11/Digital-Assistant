@@ -1,0 +1,31 @@
+.page-Container{
+    display: flex;
+    direction: column;
+    width: 80vh;
+}
+.project-page-heading{
+    display: flex;
+    justify-content: center;
+}
+.text-heading{
+    font-weight: bolder;
+}
+.container-projects{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.container-projects button{
+    width:fit-content;
+}
+.project-buttons-container{
+    display: flex;
+}
+.tasks-container{
+    display: flex;
+    gap :10px
+    
+}

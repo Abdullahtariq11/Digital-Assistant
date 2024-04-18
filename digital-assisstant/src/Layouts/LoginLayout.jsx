@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 
-function LoginLayout() {
+function LoginLayout({setLogin}) {
     const [message, setMessage] = useState(null);
     const [loginData, setLogindata] = useState({
         username: "",
@@ -19,10 +19,12 @@ function LoginLayout() {
             })
             if (response.status === 200) {
                 setMessage("success")
+                setLogin(true);
             }
 
         } catch (error) {
             setMessage("danger")
+            setLogin(true)
         }
     }
     const closeMessage = () => {

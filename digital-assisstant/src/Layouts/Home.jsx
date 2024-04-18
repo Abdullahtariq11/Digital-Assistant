@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 import FooterHome from "../Components/FooterHome";
 
 
-function Home() {
+function Home({setLogin}) {
   
 
     return (
@@ -16,7 +16,7 @@ function Home() {
                 </div>
                 <div className="half left-side"> 
                     <div className="navContained">
-                        <Navbar /> 
+                        <Navbar setLogin={setLogin}/> 
                     </div> 
                     <div className="footerContained">
                         <FooterHome/> 

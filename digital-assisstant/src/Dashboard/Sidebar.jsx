@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Sidebar.css';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TaskIcon from '@mui/icons-material/Task';
@@ -6,32 +6,31 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 
 
-function Sidebar() {
+function Sidebar(props) {
+    const [isOpen,setIsOpen]=useState(true);
+    const toggleSidebar=()=>{setIsOpen(!isOpen)}
     return (
-        <div className="sidebar-container">
-            <div className="sideHeading">
-                <h1 className="pacifico-regular side-heading">FocusCraft</h1>
-            </div>
+        <div className={`sidebar-container ${isOpen ? '': "close"} `}>
             <div className="side-menu">
                 <ul>
                     <div className='upper-side'>
-                        <li>
+                        <li onClick={()=>{props.selectTab("main")}}>
                             <DashboardIcon />
-                            Dashboard
+                            <span className={`${isOpen ? '': "span-hide"}`} >Dashboard</span>
                         </li>
-                        <li>
+                        <li onClick={()=>{props.selectTab("task")}}> 
                             <TaskIcon />
-                            Tasks
+                            <span className={`${isOpen ? '': "span-hide"}`}>Projects</span>
                         </li>
-                        <li>
+                        <li onClick={()=>{props.selectTab("project")}}> 
                             <AssignmentIcon />
-                            Projects
-                        </li>
+                            <span className={`${isOpen ? '': "span-hide"}`}>Project Board</span>
+                        </li >
                     </div>
                     <div className="bottom-side">
-                        <li>
+                        <li onClick={toggleSidebar}>
                             <ViewSidebarIcon />
-                            Toggle sidebar
+                            <span className={`${isOpen ? '': "span-hide"}`}>Toggle sidebar</span>
                         </li>
                     </div>
 

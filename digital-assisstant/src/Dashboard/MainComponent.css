@@ -1,0 +1,18 @@
+.main-component{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.main-content{
+    display: flex;
+    flex-grow: 1;
+}
+.overview{
+    min-width: 40%;
+}
+.intro{
+    min-width: 30%;
+}
+.reminders{
+    min-width: 30%;
+}

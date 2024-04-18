@@ -1,0 +1,42 @@
+.projects-container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 80vw;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+.project-topbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    align-content: space-between;
+    
+}
+.project-topbar .selection{
+    font-size: 20px;
+    
+}
+.project-topbar p{
+    font-size: 40px;
+    font-weight: bold;
+}
+.projectBoard{
+    display: flex;
+    flex-grow: 1;
+    min-width: 80vw;
+}
+.common{
+    margin: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 24%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2;
+}

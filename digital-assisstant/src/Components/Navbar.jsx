@@ -6,7 +6,7 @@ import HomeInitial from "./HomeInitial";
 import LoginLayout from "../Layouts/LoginLayout";
 
 
-function Navbar() {
+function Navbar({setLogin}) {
     const [key, setKey] = useState("home");
 
     return (
@@ -29,7 +29,7 @@ function Navbar() {
             }
             {key === "button" &&
                 <div>
-                    <LoginLayout/>
+                    <LoginLayout setLogin={setLogin}/>
                 </div>
             }
         </div>
