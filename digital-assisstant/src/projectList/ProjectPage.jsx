@@ -2,26 +2,44 @@ import React, { useState, useEffect } from "react";
 import "./ProjectPage.css";
 import data from "../assets/MOCK_DATA.json";
 
-export default function ProjectPage({ viewId, setCurrentTab }) {
+export default function ProjectPage({ viewId, onClose }) {
   const [currentData, setCurrentData] = useState(null);
   const [editMode, setCurrentMode] = useState(false);
+  const [projectInfo, setProjectInfo] = useState({
+    name: "",
+    description: "",
+    status: "",
+    deadline: "",
+    priority: ""
+  });
 
   useEffect(() => {
-    const filteredData = data.filter((dat) => dat.project_id == viewId);
-    console.log(filteredData);
+    const filteredData = data.filter((dat) => dat.project_id === viewId);
     if (filteredData.length > 0) {
-      setCurrentData(filteredData[0]); // Assuming project_id is unique
+      setCurrentData(filteredData[0]);
+      setProjectInfo({
+        name: filteredData[0].project_name,
+        description: filteredData[0].Description,
+        status: filteredData[0].status,
+        deadline: filteredData[0].Deadline,
+        priority: filteredData[0].priority
+      });
     } else {
-      setCurrentData(null); // No matching project found
+      setCurrentData(null);
     }
   }, [viewId]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProjectInfo({ ...projectInfo, [name]: value });
+  };
 
   if (!currentData) {
     return <div>No project found</div>;
   }
 
   return (
-    <div className="page-Container">
+    <div className="ProjectPage-container">
       {!editMode && (
         <div className="Project-page-Container">
           <div className="project-page-heading">
@@ -57,7 +75,7 @@ export default function ProjectPage({ viewId, setCurrentTab }) {
                 <span className="text-heading">Tasks:</span>
               </p>
               {currentData.tasks.map((task) => (
-                <div className="tasks-container">
+                <div className="tasks-container" key={task.id}>
                   <p>
                     <span className="text-heading">Title:</span> {task.title}
                   </p>
@@ -69,9 +87,7 @@ export default function ProjectPage({ viewId, setCurrentTab }) {
             </div>
 
             <div className="project-buttons-container">
-              <button onClick={() => setCurrentTab("project-list")}>
-                close
-              </button>
+              <button onClick={onClose}>close</button>
               <button onClick={() => setCurrentMode("edit")}>edit</button>
             </div>
           </div>
@@ -88,9 +104,10 @@ export default function ProjectPage({ viewId, setCurrentTab }) {
               Project Name:
             </label>
             <input
-              name="project_name"
+              name="name"
               type="text"
-              value={currentData.project_name}
+              value={projectInfo.name}
+              onChange={handleChange}
             />
             <label className="text-heading" htmlFor="description">
               Description:
@@ -100,7 +117,8 @@ export default function ProjectPage({ viewId, setCurrentTab }) {
               id=""
               cols="30"
               rows="10"
-              value={currentData.Description}
+              value={projectInfo.description}
+              onChange={handleChange}
             ></textarea>
             <label className="text-heading" htmlFor="startDate">
               Start Date:
@@ -109,27 +127,40 @@ export default function ProjectPage({ viewId, setCurrentTab }) {
               name="startDate"
               type="date"
               value={currentData.start_date}
+              readOnly
             />
             <label className="text-heading" htmlFor="Deadline">
               Deadline:
             </label>
-            <input name="Deadline" type="date" value={currentData.Deadline} />
+            <input
+              name="deadline"
+              type="date"
+              value={projectInfo.deadline}
+              onChange={handleChange}
+            />
             <label className="text-heading" htmlFor="status">
               Status:
             </label>
-            <input name="status" type="text" value={currentData.status} />
+            <input
+              name="status"
+              type="text"
+              value={projectInfo.status}
+              onChange={handleChange}
+            />
             <label className="text-heading" htmlFor="priority">
               Priority:
             </label>
-            <select name="priority" value={currentData.priority} id="priority">
+            <select
+              name="priority"
+              value={projectInfo.priority}
+              onChange={handleChange}
+            >
               <option value="High">High</option>
               <option value="Medium">Medium</option>
               <option value="Low">Low</option>
             </select>
             <div className="project-buttons-container">
-              <button onClick={() => setCurrentTab("project-list")}>
-                save
-              </button>
+              <button onClick={onClose}>save</button>
             </div>
           </div>
         </div>

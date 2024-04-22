@@ -87,4 +87,17 @@ table {
     display: flex;
     padding: 20px;
   }
-  
+  @media only screen and (max-width: 901px) {
+    .Project-table{
+      width: 100%;
+        min-width: 100%;
+        font-size: small;
+        
+
+    }
+    .table-container{
+      display: flex;
+      overflow-y: auto;
+      height: 77vh;}
+
+}

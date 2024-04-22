@@ -23,7 +23,7 @@ export default function ProjectCreate() {
         </div>
         <div className="project-fields">
           <label htmlFor="Description">Description:</label>
-          <textarea id="Description" name="Description" rows={4} cols={30}></textarea>
+          <textarea id="Description" name="Description" rows={6} cols={20}></textarea>
         </div>
         <div className="project-fields">
             <label htmlFor="priority">Priority:</label>

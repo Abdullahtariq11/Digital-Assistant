@@ -4,10 +4,12 @@ import Button from "react-bootstrap/Button";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import data from "../assets/MOCK_DATA.json";
+import ProjectPage from "../projectList/ProjectPage";
 
 export default function Topbar() {
   const [searchVal, setSearchVal] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [viewId,setViewId]=useState();
 
   const handleSearch = (e) => {
     setSearchResult([]);
@@ -15,12 +17,15 @@ export default function Topbar() {
 
     const filteredData = data.filter((item) =>
       item.project_name.toLowerCase().includes(searchVal.toLowerCase())
-    )
-    
-      setSearchResult(filteredData);
+    );
 
+    setSearchResult(filteredData);
   };
-  const searchProj = () => {};
+  const searchProj = (projectId) => {
+    setSearchResult([]);
+    setSearchVal("");
+    setViewId(projectId);
+  };
 
   return (
     <div className="top-bar">
@@ -41,9 +46,7 @@ export default function Topbar() {
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
-                <IconButton onClick={searchProj} style={{ color: "white" }}>
-                  <SearchIcon />
-                </IconButton>
+  
               </InputAdornment>
             ),
             style: { color: "white", border: "1px solid #ccc" },
@@ -53,7 +56,7 @@ export default function Topbar() {
           {searchVal && searchResult.length > 0 && (
             <div className="search-dropdown">
               {searchResult.map((item) => (
-                <div key={item.id} className="search-result">
+                <div key={item.id}  onClick={()=>searchProj(item.project_id)} className="search-result">
                   {item.project_name}
                 </div>
               ))}
@@ -61,6 +64,11 @@ export default function Topbar() {
           )}
         </ul>
       </div>
+      {viewId && 
+    <div className="ProjectPage-overlay ">
+      <ProjectPage viewId={viewId}  onClose={() => setViewId(null)}/>
+      
+    </div>}
     </div>
   );
 }

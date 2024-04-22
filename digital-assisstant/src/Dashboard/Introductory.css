@@ -1,30 +1,42 @@
 /* Introductory.css */
-.dates-container{
+.dates-container {
   margin-top: 20px;
   margin-right: 10px;
   margin-left: 10px;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  height: auto; /* Adjusted for responsiveness */
   border-radius: 8px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 95%;
 }
-.Introductory-container {
 
-    padding-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    
+.Introductory-container {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
+
+
+.calendar-container {
+  width: 100%; /* Adjusted for responsiveness */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevent overflow */
+}
+
+@media only screen and (max-width: 768px) {
   
-  .calendar-container {
-    
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   
-    
+  .reminder-holder{
+    font-size: x-small;
+    overflow: hidden;
+  }
+  .reminder-holder h5{
+    font-size: small;
   }
   
+
+}

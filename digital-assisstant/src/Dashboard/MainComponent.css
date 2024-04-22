@@ -16,3 +16,12 @@
 .reminders{
     min-width: 30%;
 }
+/* Add media query for responsiveness */
+@media only screen and (max-width: 900px) {
+    .main-content{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+}

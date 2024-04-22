@@ -40,3 +40,23 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #f2f2f2;
 }
+
+@media only screen and (max-width: 900px) {
+    .projects-container{
+
+        min-width: 100%;
+        gap: 5px;
+
+    }
+    .common{
+        margin: 2px;
+        padding: 10px;
+    }
+
+    .projectBoard{
+        font-size: small;
+    }
+    .projectBoard h4{
+        font-size: small;
+    }
+}

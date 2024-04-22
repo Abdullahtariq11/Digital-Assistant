@@ -1,16 +1,30 @@
-.Dashboard{
+/* Dashboard.css */
+.Dashboard {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+   height: 100vh;
     background-color: white;
 }
-.top{
+
+.top {
     min-height: auto;
 }
-.main  {
+
+.main {
     display: flex;
     flex-grow: 1;
     background-color: white;
     min-height: auto;
     min-width: auto;
+}
+
+/* Add media query for responsiveness */
+@media only screen and (max-width: 900px) {
+    .Dashboard {
+        flex-direction: column;
+    }
+
+    .main {
+        flex-direction: column;
+    }
 }

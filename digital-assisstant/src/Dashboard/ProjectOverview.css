@@ -1,44 +1,48 @@
-.project-overview{
-    padding: 10px;
-    min-width: 50%;
-    height: 80vh;
+/* ProjectOverview.css */
+.project-overview {
+    margin-top: 20px;
     
-}
-.progress-bar{
-    
+    width: 100%; /* Adjusted for responsiveness */
+    height: 100%;
+  }
+  
+  .progress-bar {
     padding: 2px;
     width: 100%;
     height: 20px;
-   background-color: rgb(246, 240, 240);
+    background-color: rgb(246, 240, 240);
     border-radius: 10px;
     overflow: hidden;
-    
-}
-.completion-progress{
+  }
+  
+  .completion-progress {
     height: 100%;
     background-color: #4caf50;
     width: 50%;
-    
-}
-.projects-holder {
-    
-    min-height: 80vh;
+  }
+  
+  .projects-holder {
+    min-height: 95%;
     margin: 10px;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-}
-.projects-holder ul{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .projects-holder ul {
     padding: 0px;
     margin: 0px;
-}
-.projects-holder li{
+  }
+  
+  .projects-holder li {
     list-style: none;
     width: 100%;
-}
-.projects{
+  }
+  
+  .projects {
     margin: 10px;
     padding: 10px;
     display: flex;
@@ -46,4 +50,17 @@
     border-radius: 8px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  }
+  
+  /* Media query for responsiveness */
+  @media only screen and (max-width: 900px) {
+    .project-overview {
+     height: fit-content;
+    }
+  
+    .projects-holder {
+      margin: 5px;
+      padding: 5px;
+    }
+  }
+  
