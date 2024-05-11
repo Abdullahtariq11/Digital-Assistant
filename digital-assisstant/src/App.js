@@ -6,23 +6,16 @@ import { BrowserRouter as Routes,Route,Router } from 'react-router-dom';
 
 function App() {
 
-  const[isLogin,setLogin]=useState(false);
+  const[isLogin,setLogin]=useState(true);
 
   return (
     <div className="App">
       {
         !isLogin && (<Home setLogin={setLogin}/>)
       }
-     
-      {
-             
-        isLogin && (<Dashboard/>)
-             
-      }
-
-
-     
-     
+      {     
+        isLogin && (<Dashboard setLogin={setLogin}/>)  
+      } 
     </div>
   );
 }

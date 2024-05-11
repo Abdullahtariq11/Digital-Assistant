@@ -87,6 +87,7 @@ table {
     display: flex;
     padding: 20px;
   }
+
   @media only screen and (max-width: 901px) {
     .Project-table{
       width: 100%;

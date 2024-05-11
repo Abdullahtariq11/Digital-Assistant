@@ -1,33 +1,67 @@
 import React, { useState, useEffect } from "react";
 import "./ProjectPage.css";
-import data from "../assets/MOCK_DATA.json";
 
-export default function ProjectPage({ viewId, onClose }) {
+
+
+export default function ProjectPage({ viewId, onClose,setFreshData }) {
   const [currentData, setCurrentData] = useState(null);
   const [editMode, setCurrentMode] = useState(false);
+  
+  
+
   const [projectInfo, setProjectInfo] = useState({
     name: "",
     description: "",
     status: "",
-    deadline: "",
+    priority:"",
+    startDate:"",
+    endDate: "",
     priority: ""
   });
 
-  useEffect(() => {
-    const filteredData = data.filter((dat) => dat.project_id === viewId);
-    if (filteredData.length > 0) {
-      setCurrentData(filteredData[0]);
-      setProjectInfo({
-        name: filteredData[0].project_name,
-        description: filteredData[0].Description,
-        status: filteredData[0].status,
-        deadline: filteredData[0].Deadline,
-        priority: filteredData[0].priority
-      });
-    } else {
-      setCurrentData(null);
+  async function fetchData() {
+    try {
+      const response = await fetch(`http://localhost:5115/Project/getByProjectId/${viewId}`);
+      const responseData = await response.json();
+      // Extract the array of projects from the response
+      const data = responseData;
+      setCurrentData(data); 
+      setProjectInfo(data)// Ensure that `data` is an array
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
+
+  async function editData() {
+    try {
+      console.log(viewId);
+      const response = await fetch(`http://localhost:5115/Project/editProject/${viewId}`,{
+        method:"Put",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(projectInfo), 
+      });
+      const responseData = await response.json();
+      // Extract the array of projects from the response
+      const data = responseData;
+      setCurrentData(data); 
+      setProjectInfo(data)// Ensure that `data` is an array
+    } catch (error) {
+      console.error("Error editing data:", error);
+    }
+    setFreshData(true)
+  }
+  
+  useEffect(() => {
+
+    fetchData();
   }, [viewId]);
+
+  const handleSave=()=>{
+    editData();
+    onClose();
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +71,7 @@ export default function ProjectPage({ viewId, onClose }) {
   if (!currentData) {
     return <div>No project found</div>;
   }
+
 
   return (
     <div className="ProjectPage-container">
@@ -49,19 +84,19 @@ export default function ProjectPage({ viewId, onClose }) {
           <div className="container-projects">
             <p>
               <span className="text-heading">Project Name:</span>{" "}
-              {currentData.project_name}
+              {currentData.name}
             </p>
             <p>
               <span className="text-heading">Description:</span>{" "}
-              {currentData.Description}
+              {currentData.description}
             </p>
             <p>
               <span className="text-heading">Start Date:</span>
-              {currentData.start_date}
+              {currentData.startDate}
             </p>
             <p>
               <span className="text-heading">Deadline: </span>{" "}
-              {currentData.Deadline}
+              {currentData.endDate}
             </p>
             <p>
               <span className="text-heading">Status:</span> {currentData.status}
@@ -70,25 +105,10 @@ export default function ProjectPage({ viewId, onClose }) {
               <span className="text-heading">Priority:</span>{" "}
               {currentData.priority}
             </p>
-            <div>
-              <p>
-                <span className="text-heading">Tasks:</span>
-              </p>
-              {currentData.tasks.map((task) => (
-                <div className="tasks-container" key={task.id}>
-                  <p>
-                    <span className="text-heading">Title:</span> {task.title}
-                  </p>
-                  <p>
-                    <span className="text-heading">Status</span> {task.status}
-                  </p>
-                </div>
-              ))}
-            </div>
 
             <div className="project-buttons-container">
-              <button onClick={onClose}>close</button>
               <button onClick={() => setCurrentMode("edit")}>edit</button>
+              <button onClick={onClose}>close</button>
             </div>
           </div>
         </div>
@@ -125,17 +145,17 @@ export default function ProjectPage({ viewId, onClose }) {
             </label>
             <input
               name="startDate"
-              type="date"
-              value={currentData.start_date}
+              type="text"
+              value={currentData.startDate}
               readOnly
             />
-            <label className="text-heading" htmlFor="Deadline">
+            <label className="text-heading" htmlFor="endDate">
               Deadline:
             </label>
             <input
-              name="deadline"
-              type="date"
-              value={projectInfo.deadline}
+              name="endDate"
+              type="text"
+              value={projectInfo.endDate}
               onChange={handleChange}
             />
             <label className="text-heading" htmlFor="status">
@@ -160,7 +180,8 @@ export default function ProjectPage({ viewId, onClose }) {
               <option value="Low">Low</option>
             </select>
             <div className="project-buttons-container">
-              <button onClick={onClose}>save</button>
+              <button onClick={handleSave}>save</button>
+              <button onClick={onClose}>close</button>
             </div>
           </div>
         </div>

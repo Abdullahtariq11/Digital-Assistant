@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import TaskIcon from '@mui/icons-material/Task';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 function Sidebar(props) {
@@ -25,6 +26,10 @@ function Sidebar(props) {
                         <li onClick={()=>{props.selectTab("project")}}> 
                             <AssignmentIcon />
                             <span className={`${isOpen ? '': "span-hide"}`}>Project Board</span>
+                        </li >
+                        <li onClick={()=>{props.setLogin(false)}}> 
+                            <LogoutIcon />
+                            <span className={`${isOpen ? '': "span-hide"}`}>Sign Out</span>
                         </li >
                     </div>
                     <div className="bottom-side">

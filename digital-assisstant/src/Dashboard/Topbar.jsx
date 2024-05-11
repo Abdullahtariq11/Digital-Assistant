@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./Topbar.css";
 import Button from "react-bootstrap/Button";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import data from "../assets/MOCK_DATA.json";
 import ProjectPage from "../projectList/ProjectPage";
 
 export default function Topbar() {
   const [searchVal, setSearchVal] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [projectInfo, setProjectInfo] = useState([]);
+  const [freshData, setFreshData] = useState(false);
   const [viewId,setViewId]=useState();
 
   const handleSearch = (e) => {
     setSearchResult([]);
     setSearchVal(e.target.value);
 
-    const filteredData = data.filter((item) =>
-      item.project_name.toLowerCase().includes(searchVal.toLowerCase())
+    const filteredData = projectInfo.filter((item) =>
+      item.name.toLowerCase().includes(searchVal.toLowerCase())
     );
 
     setSearchResult(filteredData);
@@ -26,6 +27,30 @@ export default function Topbar() {
     setSearchVal("");
     setViewId(projectId);
   };
+
+  
+
+  async function fetchData() {
+    try {
+      const response = await fetch("http://localhost:5115/Project/GetAll");
+      const responseData = await response.json();
+      // Extract the array of projects from the response
+      const data = responseData["$values"] || [];
+      setProjectInfo(data); // Ensure that `data` is an array
+
+      if (data.length <= 0) {
+       
+      } else {
+        
+      }
+    } catch (error) {
+      
+    }
+    setFreshData(false);
+  }
+  useEffect(() => {
+    fetchData();
+  }, [freshData]);
 
   return (
     <div className="top-bar">
@@ -55,9 +80,9 @@ export default function Topbar() {
         <ul>
           {searchVal && searchResult.length > 0 && (
             <div className="search-dropdown">
-              {searchResult.map((item) => (
-                <div key={item.id}  onClick={()=>searchProj(item.project_id)} className="search-result">
-                  {item.project_name}
+              {searchResult.map((item,index) => (
+                <div key={index}  onClick={()=>searchProj(item.id)} className="search-result">
+                  {item.name}
                 </div>
               ))}
             </div>
@@ -66,7 +91,7 @@ export default function Topbar() {
       </div>
       {viewId && 
     <div className="ProjectPage-overlay ">
-      <ProjectPage viewId={viewId}  onClose={() => setViewId(null)}/>
+      <ProjectPage viewId={viewId}  onClose={() => setViewId(null)} setFreshData={setFreshData}/>
       
     </div>}
     </div>

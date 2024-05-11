@@ -5,60 +5,42 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import "./Reminders.css";
-import data from "../assets/MOCK_DATA.json";
 
 export default function Introductory() {
   const [calval, setCalval] = useState(new Date());
-
-  const dateString = calval.toString();
-
-  // Split the date string into its components
-  const parts = dateString.split(" ");
-
-  // Extract the relevant date components
-  const day = parts[2];
-  const month = parts[1];
-  const year = parts[3];
-
-  // Format the date into "MM/DD/YYYY" format
-  const compareDate = `${monthToNumber(month)}/${day}/${year}`;
-
-  // Helper function to convert month abbreviation to number
-  function monthToNumber(month) {
-    const monthsMap = {
-      Jan: "01",
-      Feb: "02",
-      Mar: "03",
-      Apr: "04",
-      May: "05",
-      Jun: "06",
-      Jul: "07",
-      Aug: "08",
-      Sep: "09",
-      Oct: "10",
-      Nov: "11",
-      Dec: "12",
-    };
-    return monthsMap[month];
-  }
-
   const [projects, setProjects] = useState([]);
+  const [selectedDateProjects, setSelectedDateProjects] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, [calval]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5115/Project/GetAll");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const responseData = await response.json();
+      const datares = responseData["$values"] || [];
+      setProjects(datares);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     filterData();
-  }, [calval]);
+  }, [projects, calval]);
 
   const filterData = () => {
-    setProjects(data.filter((dat) => dat.Deadline == compareDate));
+    const dateString = calval.toISOString().split("T")[0];
+    const filteredProjects = projects.filter((dat) => dat.endDate === dateString);
+    setSelectedDateProjects(filteredProjects);
   };
 
-  const handleChange = (e) => {
-    const selectedFilter = e.target.value;
-
-    filterData(selectedFilter);
-  };
   const handleChange1 = (date) => {
-    setCalval(date); // Update calval with the selected date object
+    setCalval(date);
   };
 
   return (
@@ -68,28 +50,30 @@ export default function Introductory() {
         <div className="calendar-container">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
-              value={dayjs(calval)} // Convert calval to a dayjs object before passing it to DateCalendar
-              onChange={(date) => {
-                handleChange1(date.toDate());
-              }} // Convert the selected date back to a Date object
+              value={dayjs(calval)}
+              onChange={(date) => handleChange1(date.toDate())}
             />
           </LocalizationProvider>
         </div>
       </div>
-      <div className="reminder-container">
+      
         <div className="reminder-holder">
           <h5>Project Due on: {calval.toDateString()} </h5>
           <ul>
-            {projects.map((dat) => (
-              <li>
+            {selectedDateProjects.map((dat, index) => (
+              <li key={index}>
                 <p>
-                  Project Name: {dat.project_name}
+                <span >{index+1}: </span> 
+                  <span >Project Name: </span> 
+                  {dat.name},
+                  <span> Status: </span>
+                 {dat.status}
                 </p>
               </li>
             ))}
           </ul>
         </div>
-      </div>
+     
     </div>
   );
 }

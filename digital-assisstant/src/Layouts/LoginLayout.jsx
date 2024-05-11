@@ -13,7 +13,7 @@ function LoginLayout({setLogin}) {
     const submitForm = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://localhost:7183/User/login", {
+            const response = await axios.post("http://localhost:5115/User/login", {
                 email: loginData.username,
                 password: loginData.password
             })
@@ -24,7 +24,7 @@ function LoginLayout({setLogin}) {
 
         } catch (error) {
             setMessage("danger")
-            setLogin(true)
+            setLogin(false)
         }
     }
     const closeMessage = () => {
@@ -53,7 +53,7 @@ function LoginLayout({setLogin}) {
             {
                 message &&
                 <div className='overlay'>
-                {message && (
+                {(
                   <Alert key={message} variant={message} onClose={closeMessage} dismissible>
                     {message === "success" ? ("Login Successful") : ("Invalid username or password")}
                   </Alert>

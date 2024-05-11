@@ -6,7 +6,7 @@ import Topbar from "../Dashboard/Topbar";
 import Projects from "../Projects/Projects";
 import ProjectInfo from "../projectList/ProjectInfo";
 
-function Dashboard() {
+function Dashboard({setLogin}) {
   const [tab,selectTab]=useState("main")
   return (
     <div className="Dashboard">
@@ -14,7 +14,7 @@ function Dashboard() {
       <Topbar />
       </div>
       <div className="main">
-        <Sidebar selectTab={selectTab}/>
+        <Sidebar selectTab={selectTab} setLogin={setLogin}/>
         {
           tab=="main"?<MainComponent />:tab=="project"?<Projects/>:<ProjectInfo/>
         }

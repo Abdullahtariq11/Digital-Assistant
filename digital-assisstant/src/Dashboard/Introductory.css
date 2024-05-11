@@ -28,6 +28,18 @@
   overflow: hidden; /* Prevent overflow */
 }
 
+.reminder-holder{
+  display: flex;
+ 
+  flex-grow: 1;
+  flex-direction: column;
+  overflow:scroll;
+}
+
+.reminder-holder span{
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 768px) {
   
   .reminder-holder{
