@@ -1,4 +1,4 @@
-.overlay-alert {
+.overlaids {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,7 +11,7 @@
     z-index: 1000; /* Adjust z-index as needed */
   }
   
-  .overlay-alert h1 {
+  .overlaids h1 {
     margin: 0;
   }
   

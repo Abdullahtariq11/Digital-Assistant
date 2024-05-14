@@ -22,7 +22,7 @@ export default function Topbar() {
 
     setSearchResult(filteredData);
   };
-  const searchProj = (projectId) => {
+  const searchProj = (idSend,projectId) => {
     setSearchResult([]);
     setSearchVal("");
     setViewId(projectId);
@@ -81,7 +81,7 @@ export default function Topbar() {
           {searchVal && searchResult.length > 0 && (
             <div className="search-dropdown">
               {searchResult.map((item,index) => (
-                <div key={index}  onClick={()=>searchProj(item.id)} className="search-result">
+                <div key={index}  onClick={()=>searchProj(item.$id,item.id)} className="search-result">
                   {item.name}
                 </div>
               ))}
