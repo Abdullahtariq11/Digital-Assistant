@@ -1,54 +1,116 @@
-/* Introductory.css */
 .dates-container {
-  margin-top: 20px;
-  margin-right: 10px;
-  margin-left: 10px;
-  padding: 10px;
+  margin: 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  height: auto; /* Adjusted for responsiveness */
+  height: auto;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 95%;
+  background-color: #fff;
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+.dates-container h2 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 24px;
+}
+
+.dates-container p {
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 16px;
 }
 
 .Introductory-container {
-  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
-
 
 .calendar-container {
-  width: 100%; /* Adjusted for responsiveness */
+  width: 100%;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Prevent overflow */
+  overflow: hidden;
+  background-color: #fff;
+  margin-bottom: 20px;
 }
 
-.reminder-holder{
+.reminder-holder {
   display: flex;
- 
-  flex-grow: 1;
   flex-direction: column;
-  overflow:scroll;
+  overflow-y: auto;
+  margin-top: 20px;
 }
 
-.reminder-holder span{
+.reminder-holder h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.reminder-holder ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reminder-holder li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.reminder-holder p {
+  margin: 0;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.reminder-holder .project-name {
+  margin-left: 10px;
   font-weight: bold;
+  color: #333;
+}
+
+.reminder-holder .project-status {
+  margin-left: auto;
+  font-size: 14px;
+  color: #777;
+}
+
+.reminder-holder svg {
+  margin-right: 10px;
 }
 
 @media only screen and (max-width: 768px) {
-  
-  .reminder-holder{
-    font-size: x-small;
+  .dates-container {
+    margin: 10px 5px;
+    padding: 15px;
+  }
+
+  .dates-container h2 {
+    font-size: 20px;
+  }
+
+  .dates-container p {
+    font-size: 14px;
+  }
+
+  .reminder-holder h5 {
+    font-size: 14px;
+  }
+
+  .reminder-holder {
+    font-size: 14px;
     overflow: hidden;
   }
-  .reminder-holder h5{
-    font-size: small;
-  }
-  
-
 }

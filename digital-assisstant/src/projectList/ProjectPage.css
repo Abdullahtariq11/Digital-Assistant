@@ -1,85 +1,95 @@
-/* Inside ProjectPage.css */
-
-/* Styles for both view and edit modes */
-.project-page-heading {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .text-heading {
-    font-weight: bolder;
-  }
-  
-  .container-projects {
-    padding: 10px;
-    
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .container-projects button {
-    width: fit-content;
-  }
-  
-  .project-buttons-container {
-    display: flex;
-  }
-  
-  .tasks-container {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .Project-page-Container {
-    width: 100%;
-  }
-  
-  /* Styles for edit mode */
-  .Project-page-Container input,
-  .Project-page-Container textarea,
-  .Project-page-Container select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .Project-page-Container select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000000' d='M17 8l4 4m0 0l-4 4m4-4H3m13-4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position-x: calc(100% - 8px);
-    background-position-y: center;
-    padding-right: 30px;
-  }
-  
-/* Inside ProjectPage.css */
-
 .ProjectPage-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999; /* Ensure it's above other content */
-  }
-  
-  .ProjectPage-container {
-    /* Additional styling for the content container */
-    background-color: white;
-    max-width: 60%;
-    min-width: 60%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
+.ProjectPage-container {
+  background-color: white;
+  width: 60%;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.ProjectPage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-heading {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.project-details, .project-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-details p, .project-edit label {
+  font-size: 16px;
+}
+
+.project-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ProjectPage-container input,
+.ProjectPage-container textarea,
+.ProjectPage-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.ProjectPage-container select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000000' d='M17 8l4 4m0 0l-4 4m4-4H3m13-4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 8px);
+  background-position-y: center;
+  padding-right: 30px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.close-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}

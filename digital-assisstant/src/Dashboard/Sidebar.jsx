@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Sidebar.css';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TaskIcon from '@mui/icons-material/Task';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AuthContext from '../AuthContext';
 
 
 function Sidebar(props) {
+    const{logout}=useContext(AuthContext);
     const [isOpen,setIsOpen]=useState(true);
     const toggleSidebar=()=>{setIsOpen(!isOpen)}
     return (
@@ -27,7 +29,10 @@ function Sidebar(props) {
                             <AssignmentIcon />
                             <span className={`${isOpen ? '': "span-hide"}`}>Project Board</span>
                         </li >
-                        <li onClick={()=>{props.setLogin(false)}}> 
+                        <li onClick={()=>{
+                            props.setLogin(false);
+                            logout();
+                            }}> 
                             <LogoutIcon />
                             <span className={`${isOpen ? '': "span-hide"}`}>Sign Out</span>
                         </li >

@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import "./ProjectInfo.css";
 import ProjectPage from "./ProjectPage";
 import AlertModal from "../Components/AlertModal";
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
+import Spinner from "react-bootstrap/Spinner";
+import { FaCheckCircle, FaHourglassHalf, FaPauseCircle, FaTimesCircle } from "react-icons/fa";
+import AuthContext from "../AuthContext";
 
 export default function ProjectInfo() {
+  const{user}=useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [projectPerPage, setProjectPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -13,15 +17,16 @@ export default function ProjectInfo() {
   const [viewId, setViewId] = useState(null);
   const [projectInfo, setProjectInfo] = useState([]);
   const [freshData, setFreshData] = useState(false);
-  const [messageDelete, setDleleteMessage] = useState(null);
+  const [messageDelete, setDeleteMessage] = useState(null);
   const [message, setMessage] = useState({
     status: false,
     text: "",
   });
+  const [loading, setLoading] = useState(true);
 
-  const closeMessage = () => {
-    setDleleteMessage(null);
-  };
+  const closeMessage = useCallback(() => {
+    setDeleteMessage(null);
+  }, []);
 
   const lastProjectIndex = currentPage * projectPerPage;
   const firstProjectIndex = lastProjectIndex - projectPerPage;
@@ -29,26 +34,29 @@ export default function ProjectInfo() {
   const totalPages = Math.ceil(totalProjects / projectPerPage);
   const Projects = projectInfo.slice(firstProjectIndex, lastProjectIndex);
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : prevPage));
-  };
-  
-  const handlePrevPage = () => {
+  const handleNextPage = useCallback(() => {
+    setCurrentPage((prevPage) =>
+      prevPage < totalPages ? prevPage + 1 : prevPage
+    );
+  }, [totalPages]);
+
+  const handlePrevPage = useCallback(() => {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
-  };
+  }, []);
 
-  const handleChange = (e) => {
-    setProjectPerPage(e.target.value);
+  const handleChange = useCallback((e) => {
+    setProjectPerPage(Number(e.target.value));
     setCurrentPage(1);
-  };
+  }, []);
 
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
-      const response = await fetch("http://localhost:5115/Project/GetAll");
+      const response = await fetch(`http://localhost:5115/Project/GetbyId/${user.id}`);
       const responseData = await response.json();
-      // Extract the array of projects from the response
       const data = responseData["$values"] || [];
-      setProjectInfo(data); // Ensure that `data` is an array
+      setProjectInfo(data);
+      console.log(data)
 
       if (data.length <= 0) {
         setMessage({ status: true, text: "No project Found" });
@@ -58,39 +66,63 @@ export default function ProjectInfo() {
     } catch (error) {
       setMessage({ status: true, text: "Failed to fetch projects" });
     }
+    setLoading(false);
     setFreshData(false);
-  }
+  }, []);
+
   useEffect(() => {
     fetchData();
-  }, [freshData]);
+  }, [fetchData, freshData]);
 
-  const handleSort = (criteria) => {};
+  const handleSort = (criteria) => {
+    const newOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newOrder);
+    setOrderType(criteria);
 
-  const handleClick = (projectId) => {
-    console.log(projectId);
-    let datId = parseInt(projectId);
-    setCurrentTab("project-details");
-    setViewId(datId);
+    const sortedData = [...projectInfo].sort((a, b) => {
+      if (a[criteria] < b[criteria]) return newOrder === "asc" ? -1 : 1;
+      if (a[criteria] > b[criteria]) return newOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setProjectInfo(sortedData);
   };
 
-  const handleDelete = async (idRecieved) => {
+  const handleClick = (projectId) => {
+    setCurrentTab("project-details");
+    setViewId(parseInt(projectId, 10));
+  };
+
+  const handleDelete = useCallback(async (idReceived) => {
     try {
       const response = await fetch(
-        `http://localhost:5115/Project/DeleteProjectbyId/${idRecieved}`,
+        `http://localhost:5115/Project/DeleteProjectbyId/${idReceived}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            // Add any required headers here, such as authentication token
           },
         }
       );
       setFreshData(true);
-      if (response.status === 200) {
-        setDleleteMessage("success")
-    }
+      setDeleteMessage(response.status === 200 ? "success" : "danger");
     } catch (error) {
-     setDleleteMessage("danger")
+      setDeleteMessage("danger");
+    }
+  }, []);
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "Completed":
+        return <FaCheckCircle color="green" />;
+      case "In Progress":
+        return <FaHourglassHalf color="orange" />;
+      case "On Hold":
+        return <FaPauseCircle color="blue" />;
+      case "Not started":
+        return <FaTimesCircle color="red" />;
+      default:
+        return null;
     }
   };
 
@@ -98,95 +130,83 @@ export default function ProjectInfo() {
     <>
       <div className="Project-table">
         <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th onClick={() => handleSort("project_id")}>
-                  Serial Number{" "}
-                  {orderType === "project_id" && (
-                    <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  onClick={() => {
-                    handleSort("project_name");
-                  }}
-                >
-                  Project Name{" "}
-                  {orderType === "project_name" && (
-                    <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  onClick={() => {
-                    handleSort("Description");
-                  }}
-                >
-                  Description{" "}
-                  {orderType === "Description" && (
-                    <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-
-                <th
-                  onClick={() => {
-                    handleSort("start_date");
-                  }}
-                >
-                  Project Created{" "}
-                  {orderType === "start_date" && (
-                    <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th
-                  onClick={() => {
-                    handleSort("Deadline");
-                  }}
-                >
-                  Deadline{" "}
-                  {orderType === "Deadline" && (
-                    <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {!message.status &&
-                Projects.map((dat, index) => (
-                  <tr key={dat.id}>
-                    <td>{index + 1}</td>
-                    <td>{dat.name}</td>
-                    <td>{dat.description}</td>
-                    <td>{dat.startDate}</td>
-                    <td>{dat.endDate}</td>
-                    <td>{dat.status}</td>
-                    <td>{dat.priority}</td>
-                    <td>
-                      <button onClick={() => handleClick(dat.id)}>View</button>
-                      <button onClick={() => handleDelete(dat.id)}>
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-            {message.status && <AlertModal text={message.text} />}
-          </table>
+          {loading ? (
+            <div className="spinner-container">
+              <Spinner animation="border" role="status"></Spinner>
+            </div>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort("project_id")}>
+                    Serial Number{" "}
+                    {orderType === "project_id" && (
+                      <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("project_name")}>
+                    Project Name{" "}
+                    {orderType === "project_name" && (
+                      <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("description")}>
+                    Description{" "}
+                    {orderType === "description" && (
+                      <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("start_date")}>
+                    Project Created{" "}
+                    {orderType === "start_date" && (
+                      <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                    )}
+                  </th>
+                  <th onClick={() => handleSort("deadline")}>
+                    Deadline{" "}
+                    {orderType === "deadline" && (
+                      <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
+                    )}
+                  </th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {!message.status &&
+                  Projects.map((dat, index) => (
+                    <tr key={dat.id}>
+                      <td>{index + 1}</td>
+                      <td>{dat.name}</td>
+                      <td>{dat.description}</td>
+                      <td>{dat.startDate}</td>
+                      <td>{dat.endDate}</td>
+                      <td>
+                        {getStatusIcon(dat.status)} {dat.status}
+                      </td>
+                      <td>{dat.priority}</td>
+                      <td>
+                        <button onClick={() => handleClick(dat.id)}>
+                          View
+                        </button>
+                        <button onClick={() => handleDelete(dat.id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         <div className="project-footer">
           <div className="project-buttons">
-            <button
-              className="prev"
-              onClick={handlePrevPage}>
+            <button className="prev" onClick={handlePrevPage}>
               Previous
             </button>
-            <button
-              className="next"
-              onClick={handleNextPage}>
+            <button className="next" onClick={handleNextPage}>
               Next
             </button>
             <div className="page_num">
@@ -194,7 +214,7 @@ export default function ProjectInfo() {
             </div>
           </div>
           <div className="projectPer-page">
-            <p>Projects </p>
+            <p>Projects</p>
             <select
               value={projectPerPage}
               onChange={handleChange}
@@ -209,7 +229,7 @@ export default function ProjectInfo() {
         </div>
       </div>
       {viewId && (
-        <div className="ProjectPage-overlay ">
+        <div className="ProjectPage-overlay">
           <ProjectPage
             viewId={viewId}
             onClose={() => setViewId(null)}
@@ -217,9 +237,8 @@ export default function ProjectInfo() {
           />
         </div>
       )}
-      {messageDelete &&
-      <div className="overlay">
-        {
+      {messageDelete && (
+        <div className="overlay">
           <Alert
             key={messageDelete}
             variant={messageDelete}
@@ -228,10 +247,15 @@ export default function ProjectInfo() {
           >
             {messageDelete === "success"
               ? "Project Deleted Successfully"
-              : "Error were found, not able to delete project"}
+              : "Error occurred, not able to delete project"}
           </Alert>
-        }
-      </div>}
+        </div>
+      )}
+      {message.status && (
+        <div className="overlaid">
+          <AlertModal text={message.text} />
+        </div>
+      )}
     </>
   );
 }

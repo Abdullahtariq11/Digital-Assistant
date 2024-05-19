@@ -3,11 +3,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5% 5%; /* Adjust padding for responsiveness */
-   
+    padding: 5% 5%;
 }
+
 .loginContainer h4 {
-    padding: 5% 5%; /* Adjust padding for responsiveness */
+    padding: 5% 5%;
     font-style: italic;
 }
 
@@ -18,31 +18,56 @@
     align-items: center;
     background-color: rgb(69, 67, 67);
     min-height: 20vh;
-    height: auto; /* Set height to auto to adapt to content */
+    height: auto;
     width: 50vh;
-    max-width: 80%; /* Adjust maximum width for responsiveness */
+    max-width: 80%;
     border-radius: 40px;
     box-shadow: inset 5px 5px 10px #888888;
 }
 
 .loginForm h3 {
-    padding: 2% 0; /* Adjust padding for responsiveness */
+    padding: 2% 0;
     font-size: 30px;
 }
 
-.loginForm input {
-    margin: 2% 0; /* Adjust margin for responsiveness */
+.loginForm fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1% 0;
+    margin: 1% 0;
 }
 
-.loginForm fieldset {
-    padding: 2% 0; /* Adjust padding for responsiveness */
+.loginForm fieldset span {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.loginForm input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .loginForm button {
-    margin: 2% 0; /* Adjust margin for responsiveness */
+    margin: 2% 0;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #888888;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.overlay {
+.loginForm button:hover {
+    background-color: #666666;
+}
+
+.overlay1 {
     position: absolute;
     top: 0;
     left: 50%;
@@ -50,27 +75,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Adjust z-index as needed */
+    z-index: 1000;
+}
+
+.logTab {
+    font-weight: bold;
+}
+
+.logTab:hover {
+    color: #888888;
+    cursor: pointer;
 }
 
 /* Media Queries for responsiveness */
 @media only screen and (max-width: 768px) {
     .loginContainer {
-        padding: 5% 0; /* Adjust padding on smaller screens */
+        padding: 5% 0;
     }
     
     .loginForm {
-        width: 90%; /* Reduce width of form on smaller screens */
-        max-width: 90%; /* Limit form width on smaller screens */
+        width: 90%;
+        max-width: 90%;
     }
 }
 
 @media only screen and (max-height: 839px) {
     .loginContainer {
-        padding: 5% 0; /* Adjust padding on smaller heights */
+        padding: 5% 0;
     }
     
     .loginForm {
-        min-height: 25vh; /* Reduce minimum height of form on smaller heights */
+        min-height: 25vh;
     }
 }

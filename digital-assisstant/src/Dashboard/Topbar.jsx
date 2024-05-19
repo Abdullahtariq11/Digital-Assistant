@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import "./Topbar.css";
 import Button from "react-bootstrap/Button";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ProjectPage from "../projectList/ProjectPage";
+import AuthContext from "../AuthContext";
 
 export default function Topbar() {
+  const{user}=useContext(AuthContext);
   const [searchVal, setSearchVal] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [projectInfo, setProjectInfo] = useState([]);
@@ -13,6 +15,7 @@ export default function Topbar() {
   const [viewId,setViewId]=useState();
 
   const handleSearch = (e) => {
+    
     setSearchResult([]);
     setSearchVal(e.target.value);
 
@@ -32,17 +35,13 @@ export default function Topbar() {
 
   async function fetchData() {
     try {
-      const response = await fetch("http://localhost:5115/Project/GetAll");
+      const response = await fetch(`http://localhost:5115/Project/GetbyId/${user.$id}`);
       const responseData = await response.json();
       // Extract the array of projects from the response
       const data = responseData["$values"] || [];
       setProjectInfo(data); // Ensure that `data` is an array
 
-      if (data.length <= 0) {
-       
-      } else {
-        
-      }
+  
     } catch (error) {
       
     }
@@ -58,7 +57,7 @@ export default function Topbar() {
         <h1 className="pacifico-regular side-heading">FocusCraft</h1>
       </div>
       <div className="message">
-        <h2>Welcome, Abdullah!</h2>
+        <h2>Welcome, {user.name}!</h2>
         <p>Here is your Agenda For Today</p>
       </div>
       <div className="search-container">

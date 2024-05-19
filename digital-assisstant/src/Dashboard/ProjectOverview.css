@@ -1,66 +1,92 @@
-/* ProjectOverview.css */
 .project-overview {
-    margin-top: 20px;
-    
-    width: 100%; /* Adjusted for responsiveness */
-    height: 100%;
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.projects-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.projects-holder h5 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+}
+
+.progress-bar {
+  padding: 2px;
+  width: 100%;
+  height: 20px;
+  background-color: rgb(246, 240, 240);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.completion-progress {
+  height: 100%;
+  background-color: #4caf50;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px; /* Set a fixed height for the charts */
+  margin-top: 20px;
+}
+
+.projects-info {
+  margin-top: 20px;
+}
+
+.projects-info ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.projects-info li {
+  width: 100%;
+}
+
+.projects {
+  margin: 10px 0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.projects p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.projects p span {
+  font-weight: bold;
+  color: #333;
+}
+
+@media only screen and (max-width: 900px) {
+  .project-overview {
+    height: fit-content;
   }
-  
-  .progress-bar {
-    padding: 2px;
-    width: 100%;
-    height: 20px;
-    background-color: rgb(246, 240, 240);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .completion-progress {
-    height: 100%;
-    background-color: #4caf50;
-    width: 50%;
-  }
-  
+
   .projects-holder {
-    min-height: 95%;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
   }
-  
-  .projects-holder ul {
-    padding: 0px;
-    margin: 0px;
+
+  .chart-container {
+    height: 200px; /* Adjust the height for smaller screens */
   }
-  
-  .projects-holder li {
-    list-style: none;
-    width: 100%;
-  }
-  
-  .projects {
-    margin: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Media query for responsiveness */
-  @media only screen and (max-width: 900px) {
-    .project-overview {
-     height: fit-content;
-    }
-  
-    .projects-holder {
-      margin: 5px;
-      padding: 5px;
-    }
-  }
-  
+}
